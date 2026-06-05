@@ -1,173 +1,344 @@
-#  Electricity Consumption Forecasting for Smart Cities
+# Electricity Consumption Forecasting for Smart Cities
+
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Machine Learning](https://img.shields.io/badge/Machine%20Learning-XGBoost%20%7C%20LightGBM-green)
+![Streamlit](https://img.shields.io/badge/Deployment-Streamlit-red)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
 
 ## Overview
 
-This project focuses on forecasting electricity consumption in smart cities using Machine Learning and Time Series Analysis. Accurate energy demand prediction helps utility providers optimize energy distribution, improve grid stability, reduce waste, and support sustainable urban development.
+This project presents an end-to-end machine learning solution for forecasting electricity consumption in smart cities.
 
-The project uses four years of hourly electricity and weather data to build predictive models capable of forecasting future energy demand.
+Using four years of electricity generation, demand, market prices, and weather data from Spain, multiple forecasting approaches were developed and evaluated, including traditional machine learning and time-series forecasting models.
+
+The project includes:
+
+- Data preprocessing and cleaning
+- Feature engineering
+- Exploratory Data Analysis (EDA)
+- Machine learning model training
+- Time-series forecasting
+- Hyperparameter tuning
+- Cross-validation
+- Explainable AI using SHAP
+- Interactive Streamlit deployment
 
 ---
 
-## Objectives
+## Project Objectives
 
-* Forecast electricity consumption accurately.
-* Compare traditional, ensemble, and time-series forecasting models.
-* Identify the most influential factors affecting energy demand.
-* Provide real-time forecasting through an interactive dashboard.
-* Support smart-grid decision making and energy optimization.
+- Forecast hourly electricity demand
+- Compare multiple forecasting techniques
+- Prevent data leakage using TimeSeriesSplit validation
+- Understand model predictions through explainability techniques
+- Support energy management decisions
 
 ---
 
 ## Dataset
 
-The project combines:
+Dataset obtained from Kaggle:
 
-### Energy Dataset
+Energy Consumption, Generation, Prices and Weather
 
-* Electricity demand
-* Renewable energy generation
-* Non-renewable energy generation
-* Market prices
-* Storage information
+https://www.kaggle.com/datasets/nicholasjhana/energy-consumption-generation-prices-and-weather
 
-### Weather Dataset
+### Original Data Sources
 
-* Temperature
-* Humidity
-* Wind speed
-* Pressure
-* Rain and cloud coverage
+- ENTSOE Transparency Platform
+- Red Eléctrica de España (REE)
+- OpenWeather API
 
-Data covers approximately four years of hourly observations.
+### Dataset Characteristics
+
+#### Energy Dataset
+
+- 35,065 hourly observations
+- Electricity demand
+- Electricity generation by source
+- Market prices
+- Generation forecasts
+- Load forecasts
+
+#### Weather Dataset
+
+- 178,397 observations
+- Five Spanish cities
+- Temperature
+- Humidity
+- Pressure
+- Wind speed
+- Cloud coverage
+- Rain and snow measurements
 
 ---
 
-## Data Preprocessing
+## Exploratory Data Analysis
 
-* Data cleaning and merging
-* Missing value handling
-* Feature selection
-* Time-based feature engineering
-* One-hot encoding
-* Outlier treatment
-* Feature scaling
-* Cross-validation preparation
+The project includes several visualization scripts:
+
+- Average load by hour
+- Average load by day of week and month
+- Load trends over time
+- Generation breakdown over time
+- Correlation heatmap
+- Weather condition frequencies
+- Electricity demand distribution by weather conditions
 
 ---
 
-## Models Implemented
+## Feature Engineering
 
-### Baseline Models
+Features created include:
 
-* Linear Regression
-* Decision Tree Regressor
+- Hour
+- Day
+- Week
+- Month
+- Year
+- Day of Week
+- Weekend Indicator
+- Hour Categories
+- Weather Categories
 
-### Advanced Models
+Additional preprocessing steps:
 
-* Random Forest
-* XGBoost
-* LightGBM
+- Missing value handling
+- One-hot encoding
+- Outlier capping using IQR
+- StandardScaler normalization
+
+---
+
+## Models Evaluated
+
+### Machine Learning Models
+
+- Linear Regression
+- Decision Tree Regressor
+- Random Forest Regressor
+- XGBoost Regressor
+- LightGBM Regressor
 
 ### Time-Series Models
 
-* ARIMA
-* Prophet
+- ARIMA
+- Prophet
 
 ---
 
-## Evaluation Metrics
+## Model Performance
 
-Models were evaluated using:
+| Model | R² Score |
+|---------|---------|
+| XGBoost | **0.9013** |
+| LightGBM | **0.8990** |
+| Random Forest | ~0.87 |
+| Linear Regression | ~0.72 |
+| ARIMA | ~0.61 |
+| Prophet | ~0.58 |
 
-* Mean Absolute Error (MAE)
-* Root Mean Squared Error (RMSE)
-* R² Score
+Best performing model:
 
----
-
-## Results
-
-### Best Performing Model: XGBoost
-
-| Metric   | Value   |
-| -------- | ------- |
-| R² Score | 0.9013  |
-| MAE      | 1096.59 |
-| RMSE     | 1419.33 |
-
-XGBoost outperformed all other models and demonstrated strong predictive performance on unseen data.
+**XGBoost**
+- R² = 0.9013
+- MAE = 1096.59
 
 ---
 
 ## Explainable AI
 
-SHAP (SHapley Additive exPlanations) was used to interpret model predictions and identify the most important features affecting electricity demand.
+The project integrates SHAP (SHapley Additive Explanations) to explain model predictions.
 
-Key influential factors included:
+Important features identified include:
 
-* Hour of day
-* Wind generation
-* Hydro generation
-* Fossil gas generation
+- Hour of Day
+- Wind Generation
+- Solar Generation
+- Hydro Storage Consumption
+- Electricity Price
+- Temperature
 
 ---
 
-## Deployment
+## Dashboard
 
-A Streamlit web application was developed to provide:
+The project includes a Streamlit application for interactive forecasting.
 
-* Real-time load forecasting
-* Interactive simulations
-* SHAP visual explanations
-* Grid management recommendations
-* Sustainability indicators
+Features:
+
+- Real-time load prediction
+- Scenario simulation
+- SHAP explanations
+- Energy management alerts
+- CSV export functionality
+
+---
+
+## Screenshots
+
+### Dashboard
+
+![Dashboard](images/dashboard.png)
+
+### SHAP Feature Importance
+
+![SHAP Summary](images/shap_summary.png)
+
+### Model Comparison
+
+![Model Comparison](images/model_comparison.png)
+
+### Load Forecasting Example
+
+![Forecast](images/load_forecast.png)
+
+---
+
+## Repository Structure
+
+```text
+electricity-consumption-forecasting/
+
+├── app/
+│   └── str.py
+│
+├── data/
+│   └── DATA.md
+│
+├── notebooks/
+│   ├── EDA_and_Preprocessing.py
+│   ├── linear_regression_model.py
+│   ├── decision_tree_model.py
+│   ├── random_forest_model.py
+│   ├── xgboost_model.py
+│   ├── light_gbm_model.py
+│   ├── arima_model.py
+│   ├── prophet_model.py
+│   ├── cross_validation.py
+│   ├── tuning.py
+│   ├── avg_load_by_hour.py
+│   ├── avg_load_by_dow_month.py
+│   ├── total_load_over_time.py
+│   ├── correlationheatmap.py
+│   ├── boxplot_load_by_weather.py
+│   ├── weather_condition_frequencies.py
+│   └── generation_breakdown_over_time.py
+│
+├── reports/
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
+```
+
+---
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/sarahassaad140/electricity-consumption-forecasting.git
+```
+
+Move into the project folder:
+
+```bash
+cd electricity-consumption-forecasting
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Running the Project
+
+Run preprocessing:
+
+```bash
+python notebooks/EDA_and_Preprocessing.py
+```
+
+Run a model:
+
+```bash
+python notebooks/xgboost_model.py
+```
+
+Launch the dashboard:
+
+```bash
+streamlit run app/str.py
+```
 
 ---
 
 ## Technologies Used
 
-* Python
-* Pandas
-* NumPy
-* Scikit-Learn
-* XGBoost
-* LightGBM
-* ARIMA
-* Prophet
-* SHAP
-* Streamlit
-* Matplotlib
+### Programming
 
----
+- Python
 
-## Project Structure
+### Data Analysis
 
-```text
-├── data/
-├── notebooks/
-├── models/
-├── app/
-├── reports/
-├── README.md
-└── requirements.txt
-```
+- Pandas
+- NumPy
+
+### Machine Learning
+
+- Scikit-Learn
+- XGBoost
+- LightGBM
+
+### Time-Series Forecasting
+
+- ARIMA
+- Prophet
+
+### Explainability
+
+- SHAP
+
+### Visualization
+
+- Matplotlib
+- Seaborn
+
+### Deployment
+
+- Streamlit
 
 ---
 
 ## Future Improvements
 
-* Deep Learning models (LSTM, GRU)
-* Real-time IoT integration
-* Multi-city forecasting
-* Cloud deployment
-* Automated model retraining
+- LSTM and GRU forecasting models
+- Real-time API integration
+- Multi-city forecasting
+- Smart grid optimization
+- Reinforcement learning for energy scheduling
 
 ---
 
 ## Author
 
-**Sarah Assaad**
+### Sarah Assaad
 
-Master's Student in Data Science & Artificial Intelligence
+Final Year Project
 
-Université Saint-Joseph (USJ) & Université Paris-Saclay
+Université Saint-Joseph (USJ)
+
+Supervisor: Dr. Nobar Kassabian
+
+2024–2025
+
+---
+
+## License
+
+This project is provided for educational and research purposes.
